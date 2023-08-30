@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Factories\ReceptionTimeEventFactory;
+
 class EventController extends Controller
 {
-    public function index(): array
+    public function index(ReceptionTimeEventFactory $receptionTimeEventFactory): array
     {
-        return [
-            [
-                'title' => 'John Doe',
-                'start' => '2023-09-01 12:00:00',
-                'end' => '2023-09-01 13:00:00',
-            ]
-        ];
+        return $receptionTimeEventFactory->getEvents();
     }
 }

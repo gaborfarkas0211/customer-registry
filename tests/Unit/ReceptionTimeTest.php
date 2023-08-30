@@ -1,16 +1,16 @@
 <?php
 
 use App\Enums\ReceptionType;
-use App\Models\CustomerReceptionTime;
+use App\Models\ReceptionTime;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Tests\TestCase;
 
-class CustomerReceptionTimeTest extends TestCase
+class ReceptionTimeTest extends TestCase
 {
 
     public function testOneTimeDefaultValues(): void
     {
-        $customerReceptionTime = CustomerReceptionTime::factory()->create([
+        $customerReceptionTime = ReceptionTime::factory()->create([
             'start_date' => '2023-01-01',
             'type' => ReceptionType::OneTime,
             'start_time' => '12:00:00',
@@ -39,9 +39,9 @@ class CustomerReceptionTimeTest extends TestCase
             'start_time' => '12:00:00',
             'end_time' => '13:00:00',
         ];
-        CustomerReceptionTime::factory()->create($attributes);
+        ReceptionTime::factory()->create($attributes);
         $this->expectException(UniqueConstraintViolationException::class);
-        CustomerReceptionTime::factory()->create($attributes);
+        ReceptionTime::factory()->create($attributes);
 
     }
 }

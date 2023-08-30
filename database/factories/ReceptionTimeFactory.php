@@ -7,9 +7,9 @@ use App\Enums\ReceptionType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CustomerReceptionTime>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ReceptionTime>
  */
-class CustomerReceptionTimeFactory extends Factory
+class ReceptionTimeFactory extends Factory
 {
     /**
      * Define the model's default state.

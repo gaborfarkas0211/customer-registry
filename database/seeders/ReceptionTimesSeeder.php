@@ -4,24 +4,24 @@ namespace Database\Seeders;
 
 use App\Enums\ReceptionDay;
 use App\Enums\ReceptionType;
-use App\Models\CustomerReceptionTime;
+use App\Models\ReceptionTime;
 use Illuminate\Database\Seeder;
 
-class CustomerReceptionTimesSeeder extends Seeder
+class ReceptionTimesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        if (CustomerReceptionTime::count() > 0) {
+        if (ReceptionTime::count() > 0) {
             return;
         }
 
         $data = $this->getData();
 
         foreach ($data as $row) {
-            CustomerReceptionTime::create($row);
+            ReceptionTime::create($row);
         }
     }
 
