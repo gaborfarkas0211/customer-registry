@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Enums\ReceptionDay;
 use App\Enums\ReceptionType;
+use App\Models\Event;
 use App\Models\ReceptionTime;
+use App\Services\ReceptionTimeEventGenerator;
 use Illuminate\Database\Seeder;
 
 class ReceptionTimesSeeder extends Seeder
@@ -21,7 +23,9 @@ class ReceptionTimesSeeder extends Seeder
         $data = $this->getData();
 
         foreach ($data as $row) {
-            ReceptionTime::create($row);
+            $receptionTime = ReceptionTime::create($row);
+            $receptionTimeEvents = (new ReceptionTimeEventGenerator($receptionTime))->getEvents();
+            Event::insert($receptionTimeEvents);
         }
     }
 

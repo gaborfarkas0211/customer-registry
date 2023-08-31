@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\DateTimeHelper;
 use App\Models\ReceptionTime;
 use Illuminate\Support\Carbon;
 
-class ReceptionTimeEventService
+class ReceptionTimeEventGenerator
 {
     private array $events = [];
 
@@ -34,11 +35,11 @@ class ReceptionTimeEventService
 
     private function addEvent(Carbon $eventDate): void
     {
+        $dateTimeString = fn(Carbon $date, string $startTime) => DateTimeHelper::setTimeAndGetDateTimeString($date, $startTime);
         $event = [
-            'start' => $this->getEventDateTimeString($eventDate, $this->receptionTime->start_time),
-            'end' => $this->getEventDateTimeString($eventDate, $this->receptionTime->end_time),
-            'title' => 'Reception time',
-            'display' => 'background',
+            'reception_time_id' => $this->receptionTime->id,
+            'start_time' => $dateTimeString($eventDate, $this->receptionTime->start_time),
+            'end_time' => $dateTimeString($eventDate, $this->receptionTime->end_time),
         ];
         $this->events[] = $event;
     }
@@ -55,26 +56,10 @@ class ReceptionTimeEventService
         return $eventDate;
     }
 
-    public function getEventDateTimeString(Carbon $eventStartDateTime, string $time): string
-    {
-        return $eventStartDateTime->setTimeFromTimeString($time)
-            ->toDateTimeLocalString();
-    }
-
     private function isValidEventDate(Carbon $eventDate): bool
     {
         return $this->receptionTime->isTypeEveryWeek() ||
-            ($this->receptionTime->isTypeEvenWeek() && $this->isEvenWeek($eventDate)) ||
-            ($this->receptionTime->isTypeOddWeek() && $this->isOddWeek($eventDate));
-    }
-
-    private function isEvenWeek(Carbon $currentDate): bool
-    {
-        return $currentDate->weekOfYear % 2 === 0;
-    }
-
-    private function isOddWeek(Carbon $currentDate): bool
-    {
-        return !$this->isEvenWeek($currentDate);
+            ($this->receptionTime->isTypeEvenWeek() && DateTimeHelper::isEvenWeek($eventDate)) ||
+            ($this->receptionTime->isTypeOddWeek() && DateTimeHelper::isOddWeek($eventDate));
     }
 }
