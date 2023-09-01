@@ -16,13 +16,13 @@ class ReceptionTimeTest extends TestCase
             'start_time' => '12:00:00',
             'end_time' => '13:00:00',
         ]);
-        $this->assertDatabaseHas('customer_reception_times', [
+        $this->assertDatabaseHas('reception_times', [
             'id' => $customerReceptionTime->id,
             'end_date' => '2023-01-01',
             'day' => \App\Enums\ReceptionDay::Sunday,
         ]);
         $customerReceptionTime->update(['start_date' => '2023-01-02']);
-        $this->assertDatabaseHas('customer_reception_times', [
+        $this->assertDatabaseHas('reception_times', [
             'id' => $customerReceptionTime->id,
             'end_date' => '2023-01-02',
             'day' => \App\Enums\ReceptionDay::Monday,

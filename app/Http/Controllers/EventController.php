@@ -6,13 +6,11 @@ use App\Helpers\DateTimeHelper;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
-use App\Models\ReceptionTime;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return EventResource::collection(Event::all());
     }

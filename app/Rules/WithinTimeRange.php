@@ -2,14 +2,11 @@
 
 namespace App\Rules;
 
-use App\Helpers\DateTimeHelper;
 use App\Interfaces\TimeCollisionInterface;
-use App\Models\ReceptionTime;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Support\Facades\Log;
 
-class WithinReceptionTime implements ValidationRule
+class WithinTimeRange implements ValidationRule
 {
     public function __construct(private readonly TimeCollisionInterface $timeCollision)
     {
@@ -21,8 +18,8 @@ class WithinReceptionTime implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->timeCollision->hasTimeCollision($value['start'], $value['end'])) {
+        if ($this->timeCollision->hasTimeCollision($value['start'], $value['end'])) {
             $fail('The :attribute must be in free time.');
-        };
+        }
     }
 }

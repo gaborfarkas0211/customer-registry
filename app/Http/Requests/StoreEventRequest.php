@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\WithinReceptionTime;
+use App\Rules\WithinTimeRange;
 use App\Services\EventService;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreEventRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'time_range' => ['required', 'array', new WithinReceptionTime(new EventService())],
+            'time_range' => ['required', 'array', new WithinTimeRange(new EventService())],
             'time_range.start' => ['required', 'date_format:Y-m-d\TH:i:sP', 'after:now'],
             'time_range.end' => ['required', 'date_format:Y-m-d\TH:i:sP', 'after:startDateTime'],
             'title' => ['required', 'string'],

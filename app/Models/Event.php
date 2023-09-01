@@ -3,13 +3,10 @@
 namespace App\Models;
 
 use App\Enums\EventType;
-use App\Enums\ReceptionDay;
-use App\Enums\ReceptionType;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -33,6 +30,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereStartTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
+ * @method static Builder|Event timeRange(string $startTime, string $endTime, string $column = 'start_time')
  * @mixin \Eloquent
  */
 class Event extends Model
@@ -63,5 +61,11 @@ class Event extends Model
         }
 
         return EventType::Normal;
+    }
+
+    public static function scopeTimeRange(Builder $query, string $startTime, string $endTime, string $column = 'start_time'): Builder
+    {
+        return $query->where($column, '>', $startTime)
+            ->where($column, '<', $endTime);
     }
 }

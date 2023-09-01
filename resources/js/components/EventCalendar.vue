@@ -25,6 +25,7 @@ async function storeEvent(data) {
     try {
         const response = await axios.post('/events', data)
         events.value.push(getEventObject(response.data.data))
+        alert('A foglalás sikeres volt!')
     } catch (error) {
         alert('A foglalás sikertelen! Válassz másik időpontot, vagy próbáld újra később.')
     }
