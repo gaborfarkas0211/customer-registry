@@ -40,3 +40,9 @@ watchEffect(() => {
     calendarOptions.value.events = props.events;
 });
 </script>
+
+<style>
+.fc-timegrid-col-bg > .fc-timegrid-bg-harness > .fc-event-start {
+    border-top: 1px solid black;
+}
+</style>
