@@ -20,7 +20,7 @@ class EventController extends Controller
         $event = Event::create([
             'start_time' => DateTimeHelper::getDateTimeString($request->input('time_range.start')),
             'end_time' => DateTimeHelper::getDateTimeString($request->input('time_range.end')),
-            'title' => $request->input('title')
+            'title' => $request->input('title'),
         ]);
 
         return new EventResource($event);

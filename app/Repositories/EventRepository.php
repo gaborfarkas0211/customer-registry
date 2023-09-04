@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
 use App\Interfaces\TimeCollisionInterface;
 use App\Models\Event;
 
-class EventService implements TimeCollisionInterface
+class EventRepository implements TimeCollisionInterface
 {
     public function hasTimeCollision(string $startTime, string $endTime): bool
     {

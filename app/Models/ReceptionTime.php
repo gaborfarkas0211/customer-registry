@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * App\Models\CustomerReceptionTime
+ * App\Models\ReceptionTime
  *
  * @property int $id
  * @property Carbon $start_date
@@ -22,6 +22,8 @@ use Illuminate\Support\Carbon;
  * @property string $end_time
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
+ * @property-read int|null $events_count
  * @method static \Database\Factories\ReceptionTimeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|ReceptionTime newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ReceptionTime newQuery()
@@ -57,11 +59,11 @@ class ReceptionTime extends Model
         'end_time',
     ];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        $setOneTimeAttributes = function (self $model) {
+        $setOneTimeAttributes = static function (self $model) {
             if ($model->isOneTime()) {
                 $model->end_date = $model->start_date;
                 $model->day = ReceptionDay::getDay($model->start_date);
@@ -70,6 +72,11 @@ class ReceptionTime extends Model
 
         static::creating($setOneTimeAttributes);
         static::updating($setOneTimeAttributes);
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
     }
 
     public function eventEndDate(): Attribute

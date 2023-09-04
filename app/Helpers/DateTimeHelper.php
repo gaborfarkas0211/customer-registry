@@ -8,14 +8,13 @@ class DateTimeHelper
 {
     public static function getDateTimeString(string $dateTimeString): string
     {
-        $dateTime = Carbon::parse($dateTimeString);
-
-        return $dateTime->toDateTimeLocalString();
+        return Carbon::parse($dateTimeString)->toDateTimeLocalString();
     }
 
     public static function setTimeAndGetDateTimeString(Carbon $date, string $time): string
     {
-        return $date->setTimeFromTimeString($time)
+        return $date->copy()
+            ->setTimeFromTimeString($time)
             ->toDateTimeLocalString();
     }
 

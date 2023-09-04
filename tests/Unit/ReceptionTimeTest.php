@@ -1,6 +1,7 @@
 <?php
 
-use App\Enums\ReceptionType;
+namespace Tests\Unit;
+
 use App\Models\ReceptionTime;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Tests\TestCase;
