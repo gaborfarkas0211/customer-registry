@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\ReceptionDay;
-use App\Enums\ReceptionType;
+use App\Enums\ReceptionTimeDay;
+use App\Enums\ReceptionTimeType;
+use App\Exceptions\InvalidReceptionTypeException;
 use App\Models\Event;
 use App\Models\ReceptionTime;
 use App\Services\ReceptionTimeEventGenerator;
@@ -13,6 +14,7 @@ class ReceptionTimesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * @throws InvalidReceptionTypeException
      */
     public function run(): void
     {
@@ -34,36 +36,36 @@ class ReceptionTimesSeeder extends Seeder
         return [
             [
                 'start_date' => '2023-09-08',
-                'type' => ReceptionType::OneTime,
+                'type' => ReceptionTimeType::OneTime,
                 'start_time' => '08:00:00',
                 'end_time' => '10:00:00',
             ],
             [
                 'start_date' => '2023-01-01',
-                'type' => ReceptionType::EvenWeek,
-                'day' => ReceptionDay::Monday,
+                'type' => ReceptionTimeType::EvenWeek,
+                'day' => ReceptionTimeDay::Monday,
                 'start_time' => '10:00:00',
                 'end_time' => '12:00:00',
             ],
             [
                 'start_date' => '2023-01-01',
-                'type' => ReceptionType::OddWeek,
-                'day' => ReceptionDay::Wednesday,
+                'type' => ReceptionTimeType::OddWeek,
+                'day' => ReceptionTimeDay::Wednesday,
                 'start_time' => '12:00:00',
                 'end_time' => '16:00:00',
             ],
             [
                 'start_date' => '2023-01-01',
-                'type' => ReceptionType::EveryWeek,
-                'day' => ReceptionDay::Friday,
+                'type' => ReceptionTimeType::EveryWeek,
+                'day' => ReceptionTimeDay::Friday,
                 'start_time' => '10:00:00',
                 'end_time' => '16:00:00',
             ],
             [
                 'start_date' => '2023-06-01',
                 'end_date' => '2023-11-30',
-                'type' => ReceptionType::EveryWeek,
-                'day' => ReceptionDay::Thursday,
+                'type' => ReceptionTimeType::EveryWeek,
+                'day' => ReceptionTimeDay::Thursday,
                 'start_time' => '16:00:00',
                 'end_time' => '20:00:00',
             ],

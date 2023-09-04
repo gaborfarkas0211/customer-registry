@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use Carbon\Carbon;
 
-enum ReceptionDay: int
+enum ReceptionTimeDay: int
 {
     case Monday = 1;
     case Tuesday = 2;
@@ -14,7 +14,7 @@ enum ReceptionDay: int
     case Saturday = 6;
     case Sunday = 7;
 
-    public static function getDay(string|Carbon $date): ReceptionDay|null
+    public static function getByDate(string|Carbon $date): self|null
     {
         if (is_string($date)) {
             $date = Carbon::parse($date);

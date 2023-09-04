@@ -26,14 +26,10 @@ class EventRepository implements TimeCollisionInterface
     {
         return Event::query()
             ->whereDoesntHave('receptionTime')
-            ->where(
-                fn($query) => $query->orWhere(fn($query) => $query->timeRange($startTime, $endTime, 'start_time'))
-                    ->orWhere(fn($query) => $query->timeRange($startTime, $endTime, 'end_time'))
-                    ->orWhere(fn($query) => $query->where('start_time', '>', $startTime)
-                        ->where('end_time', '<', $endTime))
-                    ->orWhere(fn($query) => $query->where('start_time', '<', $startTime)
-                        ->where('end_time', '>', $endTime))
-            )
+            ->where(fn($query) => $query->where(fn($query) => $query->startTimeRange($startTime, $endTime))
+                ->orWhere(fn($query) => $query->endTimeRange($startTime, $endTime))
+                ->orWhere(fn($query) => $query->where('start_time', '<', $startTime)
+                    ->where('end_time', '>', $endTime)))
             ->exists();
     }
 }

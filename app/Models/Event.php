@@ -20,17 +20,19 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read \App\Models\ReceptionTime|null $receptionTime
- * @method static \Illuminate\Database\Eloquent\Builder|Event newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Event newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Event query()
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereEndTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereReceptionTimeId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereStartTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Event whereUpdatedAt($value)
- * @method static Builder|Event timeRange(string $startTime, string $endTime, string $column = 'start_time')
+ * @method static Builder|Event endTimeRange(string $startTime, string $endTime)
+ * @method static \Database\Factories\EventFactory factory($count = null, $state = [])
+ * @method static Builder|Event newModelQuery()
+ * @method static Builder|Event newQuery()
+ * @method static Builder|Event query()
+ * @method static Builder|Event startTimeRange(string $startTime, string $endTime)
+ * @method static Builder|Event whereCreatedAt($value)
+ * @method static Builder|Event whereEndTime($value)
+ * @method static Builder|Event whereId($value)
+ * @method static Builder|Event whereReceptionTimeId($value)
+ * @method static Builder|Event whereStartTime($value)
+ * @method static Builder|Event whereTitle($value)
+ * @method static Builder|Event whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Event extends Model
@@ -63,9 +65,15 @@ class Event extends Model
         return EventType::Normal;
     }
 
-    public static function scopeTimeRange(Builder $query, string $startTime, string $endTime, string $column = 'start_time'): Builder
+    public static function scopeStartTimeRange(Builder $query, string $startTime, string $endTime): Builder
     {
-        return $query->where($column, '>', $startTime)
-            ->where($column, '<', $endTime);
+        return $query->where('start_time', '>=', $startTime)
+            ->where('start_time', '<', $endTime);
+    }
+
+    public static function scopeEndTimeRange(Builder $query, string $startTime, string $endTime): Builder
+    {
+        return $query->where('end_time', '>', $startTime)
+            ->where('end_time', '<=', $endTime);
     }
 }
